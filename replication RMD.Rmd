@@ -1,0 +1,55 @@
+---
+title: "Scholarship Administration Survey"
+author: "Larry Liu"
+date: "May 24, 2016"
+output: html_document
+---
+
+First, we load in all of the data and clean the data (i.e. remove subjects who failed the attention check).
+```{r}
+#Read in the data
+data = read.csv("C:/Users/Larry/Dropbox/Stanford University/2015-2016/Spring Quarter/PSYCH 154/replicationData.csv")
+
+n_collected = nrow(data)
+print(n_collected)
+```
+
+A total of 301 subjects completed our Qualtrics survey. However, not all of them passed the attention check.
+
+```{r}
+#Filter out all results that fail the attention check
+data = data[data$Q11==3,]
+
+#Number of valid entries
+n = nrow(data)
+n
+```
+There were 267 total subjects that passed the attention check, while 34 failed. We perform analysis only on the 267 subjects that passed.
+
+Next, we want to tabulate the results in order to perform a chi-squared test for Prize Package 1.
+```{r}
+PP1vector = c(nrow(data[data$Q1==1,]),nrow(data[data$Q2==1,]),nrow(data[data$Q1==2,]),nrow(data[data$Q2==2,]))
+PP1matrix = matrix(PP1vector,nrow=2,ncol=2)
+PP1 = data.frame(PP1matrix)
+colnames(PP1) = c("Choice 1", "Choice 2")
+rownames(PP1) = c("Q1", "Q2")
+
+PP1
+chisq.test(PP1)
+```
+
+Next, we want to tabulate the results in order to perform a chi-squared test for Prize Package 2.
+```{r}
+PP2vector = c(nrow(data[data$Q4==1,]),nrow(data[data$Q5==1,]),nrow(data[data$Q4==2,]),nrow(data[data$Q5==2,]))
+PP2matrix = matrix(PP2vector,nrow=2,ncol=2)
+PP2 = data.frame(PP2matrix)
+colnames(PP2) = c("Choice 1", "Choice 2")
+rownames(PP2) = c("Q4", "Q5")
+
+PP2
+chisq.test(PP2)
+```
+
+For the Allais Paradox to be supported, more subjects had to choose option "B" in Question 2  (the inequality-averse choice), than in Question 1. The results showed that subjects indeed chose the inequality-averse option to a significant degree, therefore, the Allais Paradox is supported.
+ 
+For the inequality peanuts effect to be supported, more subjects had to choose the inequality averse option (B) in Question 5 (the control) than in Question 4, where the stakes were too small.  This is supported by our data, indicating the inequality peanuts affect at work. 
