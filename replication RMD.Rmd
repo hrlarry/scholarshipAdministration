@@ -31,10 +31,11 @@ Next, we want to tabulate the results in order to perform a chi-squared test for
 PP1vector = c(nrow(data[data$Q1==1,]),nrow(data[data$Q2==1,]),nrow(data[data$Q1==2,]),nrow(data[data$Q2==2,]))
 PP1matrix = matrix(PP1vector,nrow=2,ncol=2)
 PP1 = data.frame(PP1matrix)
-colnames(PP1) = c("Choice 1", "Choice 2")
+colnames(PP1) = c("Choice A", "Choice B")
 rownames(PP1) = c("Q1", "Q2")
 
-PP1
+PP1 #Absolute joint distribution
+PP1/n #Probabilistic joint distribution
 chisq.test(PP1)
 ```
 
@@ -43,10 +44,11 @@ Next, we want to tabulate the results in order to perform a chi-squared test for
 PP2vector = c(nrow(data[data$Q4==1,]),nrow(data[data$Q5==1,]),nrow(data[data$Q4==2,]),nrow(data[data$Q5==2,]))
 PP2matrix = matrix(PP2vector,nrow=2,ncol=2)
 PP2 = data.frame(PP2matrix)
-colnames(PP2) = c("Choice 1", "Choice 2")
+colnames(PP2) = c("Choice A", "Choice B")
 rownames(PP2) = c("Q4", "Q5")
 
-PP2
+PP2 #Absolute joint distribution
+PP2/n #Probabilistic joint distribution
 chisq.test(PP2)
 ```
 

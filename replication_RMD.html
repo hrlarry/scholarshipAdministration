@@ -88,13 +88,17 @@ n</code></pre>
 <pre class="r"><code>PP1vector = c(nrow(data[data$Q1==1,]),nrow(data[data$Q2==1,]),nrow(data[data$Q1==2,]),nrow(data[data$Q2==2,]))
 PP1matrix = matrix(PP1vector,nrow=2,ncol=2)
 PP1 = data.frame(PP1matrix)
-colnames(PP1) = c(&quot;Choice 1&quot;, &quot;Choice 2&quot;)
+colnames(PP1) = c(&quot;Choice A&quot;, &quot;Choice B&quot;)
 rownames(PP1) = c(&quot;Q1&quot;, &quot;Q2&quot;)
 
-PP1</code></pre>
-<pre><code>##    Choice 1 Choice 2
+PP1 #Absolute joint distribution</code></pre>
+<pre><code>##    Choice A Choice B
 ## Q1       45       77
 ## Q2       18      127</code></pre>
+<pre class="r"><code>PP1/n #Probabilistic joint distribution</code></pre>
+<pre><code>##      Choice A  Choice B
+## Q1 0.16853933 0.2883895
+## Q2 0.06741573 0.4756554</code></pre>
 <pre class="r"><code>chisq.test(PP1)</code></pre>
 <pre><code>## 
 ##  Pearson's Chi-squared test with Yates' continuity correction
@@ -105,13 +109,17 @@ PP1</code></pre>
 <pre class="r"><code>PP2vector = c(nrow(data[data$Q4==1,]),nrow(data[data$Q5==1,]),nrow(data[data$Q4==2,]),nrow(data[data$Q5==2,]))
 PP2matrix = matrix(PP2vector,nrow=2,ncol=2)
 PP2 = data.frame(PP2matrix)
-colnames(PP2) = c(&quot;Choice 1&quot;, &quot;Choice 2&quot;)
+colnames(PP2) = c(&quot;Choice A&quot;, &quot;Choice B&quot;)
 rownames(PP2) = c(&quot;Q4&quot;, &quot;Q5&quot;)
 
-PP2</code></pre>
-<pre><code>##    Choice 1 Choice 2
+PP2 #Absolute joint distribution</code></pre>
+<pre><code>##    Choice A Choice B
 ## Q4       74       59
 ## Q5       43       91</code></pre>
+<pre class="r"><code>PP2/n #Probabilistic joint distribution</code></pre>
+<pre><code>##     Choice A  Choice B
+## Q4 0.2771536 0.2209738
+## Q5 0.1610487 0.3408240</code></pre>
 <pre class="r"><code>chisq.test(PP2)</code></pre>
 <pre><code>## 
 ##  Pearson's Chi-squared test with Yates' continuity correction
