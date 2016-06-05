@@ -52,6 +52,41 @@ PP2/n #Probabilistic joint distribution
 chisq.test(PP2)
 ```
 
+Because the Questions (between-questions) and Choices (within-questions) were not randomly presented, I build a linear regression model to confirm that there wasn't biases resulting from any priming effects that might've happened depending on which Prize Package Set the subject saw in Question 1.
+
+```{r}
+viewedPP4 = data[(data$Q4==1 | data$Q4==2),]
+viewedPP4$viewedPP1 = (viewedPP4$Q1==1 | viewedPP4$Q1==2) + 0
+viewedPP4$Q4 <- as.numeric(viewedPP4$Q4) - 1 #adjust for levels offset
+
+PP4model <- lm(viewedPP4$Q4 ~ viewedPP4$viewedPP1)
+summary(PP4model)
+```
+For subjects viewing Prize Package Set 4, there seemed to be no effect of whether they saw Prize Package Set 1 or 2 first on their responses in Prize Package Set 4, F(1, 131) = 1.60, p=0.21.
+
+```{r}
+viewedPP5 = data[(data$Q5==1 | data$Q5==2),]
+viewedPP5$viewedPP1 = (viewedPP5$Q1==1 | viewedPP5$Q1==2) + 0
+viewedPP5$Q5 <- as.numeric(viewedPP5$Q5) - 1 #adjust for levels offset
+
+PP5model <- lm(viewedPP5$Q5 ~ viewedPP5$viewedPP1)
+summary(PP5model)
+```
+For subjects viewing Prize Package Set 5, there seemed to be a confounding effect of whether they saw Prize Package Set 1 or 2 first on their responses in Prize Package Set 5. In particular, those who viewed Prize Package Set 1 seemed more likely to choose Choice B (Package 1 encoded as 1, Package 2 encoded as 0 on independent variable), F(1, 132) = 4.89, p=0.029.
+
+```{r}
+data$answeredAFirst = (data$Q1==1 | data$Q2==1) + 0
+data$answeredASecond = (data$Q4==1 | data$Q5==1) + 0
+
+AnswerOrderModel <- lm(data$answeredASecond ~ data$answeredAFirst)
+summary(AnswerOrderModel)
+```
+There seems to be no significant effect of what the subjects picked as their Choice in Question 1 (Package 1 or 2) on what they picked in Question 2 (Package 4 or 5), F(1, 265) = 0.01, p=0.910.
+
+Summary:
+
 For the Allais Paradox to be supported, more subjects had to choose option "B" in Question 2  (the inequality-averse choice), than in Question 1. The results showed that subjects indeed chose the inequality-averse option to a significant degree, therefore, the Allais Paradox is supported.
  
-For the inequality peanuts effect to be supported, more subjects had to choose the inequality averse option (B) in Question 5 (the control) than in Question 4, where the stakes were too small.  This is supported by our data, indicating the inequality peanuts affect at work. 
+For the inequality peanuts effect to be supported, more subjects had to choose the inequality averse option (B) in Question 5 (the control) than in Question 4, where the stakes were too small.  This is supported by our data, indicating the inequality peanuts affect at work.
+
+There is a potential confound in the order of the questions for the outcomes Prize Package Set 5, though no significant effects were found for all other outcomes.
